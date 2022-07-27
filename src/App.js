@@ -15,16 +15,18 @@ function App() {
       setListarTareas([...listarTareas, { name: nombreTarea, done: false }]);
   };
 
-  const ToggleTask= (tarea) => {
+  const ToggleTask = (tarea) => {
     setListarTareas(
-      listarTareas.map(t => (t.name === tarea.name) ? {...t, done: !t.done} : t )
-    )
-  }
+      listarTareas.map((t) =>
+        t.name === tarea.name ? { ...t, done: !t.done } : t
+      )
+    );
+  };
 
-  const cleanTasks=() => {
-    setListarTareas(listarTareas.filter(task => !task.done));
+  const cleanTasks = () => {
+    setListarTareas(listarTareas.filter((task) => !task.done));
     setShowCompleted(false);
-  }
+  };
 
   useEffect(() => {
     let data = localStorage.getItem("tareas");
@@ -38,16 +40,31 @@ function App() {
   }, [listarTareas]);
 
   return (
-    <div className="App">
-      <TasksCreator crearTareas={crearTareas}></TasksCreator>
-        <label>tareas incompletas</label>
-      <TaskTable tasks={listarTareas} ToggleTask={ToggleTask}></TaskTable>
-      <VisibilityControl isChecked={showCompleted} showCompleted={showCompleted} setShowCompleted={(checked) => setShowCompleted(checked)} cleanTasks={cleanTasks}/>
-      {
-        showCompleted === true && (
-          <TaskTable tasks={listarTareas} ToggleTask={ToggleTask} showCompleted={true}></TaskTable>
-        )
-      }
+    <div className="bg-dark vh-100 text-white ">
+      <div className="container p-4 col-md-4 offset-md-4">
+        <TasksCreator crearTareas={crearTareas}></TasksCreator>
+        <table className="table table-dark table-striped table-bordered border-secondary">
+          <thead>
+            <tr className="table-primary">
+              <th>tareas incompletas</th>
+            </tr>
+          </thead>
+        </table>
+        <TaskTable tasks={listarTareas} ToggleTask={ToggleTask}></TaskTable>
+        <VisibilityControl
+          isChecked={showCompleted}
+          showCompleted={showCompleted}
+          setShowCompleted={(checked) => setShowCompleted(checked)}
+          cleanTasks={cleanTasks}
+        />
+        {showCompleted === true && (
+          <TaskTable
+            tasks={listarTareas}
+            ToggleTask={ToggleTask}
+            showCompleted={true}
+          ></TaskTable>
+        )}
+      </div>
     </div>
   );
 }
