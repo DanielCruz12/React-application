@@ -14,7 +14,7 @@ export const TaskTable = ({ tasks, ToggleTask, showCompleted = false }) => {
       <thead>
         <tr className="table-primary">
           {showCompleted === true && (
-            <th>tareas completas</th>
+            <th>tareas realizadas</th>
           ) }
         </tr>
       </thead>
